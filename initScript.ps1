@@ -88,7 +88,7 @@ ForEach($asset in $assets){
         Write-Host $nl
         Write-Host $nl
         Write-Host 'installing vim' -ForegroundColor Magenta
-        ./vim_installer.exe -y
+        ./vim_installer.exe
         rm -fo ./vim_installer.exe
         break
     }
