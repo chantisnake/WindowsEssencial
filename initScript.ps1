@@ -17,7 +17,7 @@ $nl = [Environment]::NewLine
 Write-Host $nl
 Write-Host $nl
 Write-Host 'installing choco' -ForegroundColor Magenta
-iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))
+# iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))
 
 # install git
 Write-Host $nl
@@ -95,8 +95,12 @@ ForEach($asset in $assets){
 }
 
 # downloading vim configuration file
+Write-Host $nl
+Write-Host $nl
+Write-Host 'setting up vim' -ForegroundColor Magenta
 cd $HOME
 iex (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/chantisnake/vim_config/master/setup.ps1')
+Write-Host 'redownloading vundle' -ForegroundColor Magenta
 cd .\vimfiles\bundle
 Remove-Item vundle.vim -Force -Confirm:$false
 git clone https://github.com/VundleVim/Vundle.vim
@@ -105,7 +109,6 @@ cd $HOME
 # restart
 Write-Host 'your computer will restart to finish the setups'
 Write-Host 'press Ctrl-c to prevent restarting'
-Write-Host 'Press Enter to restart'
-Read-Host ''
+Read-Host 'Press Enter to restart'
 Restart-Computer
 
