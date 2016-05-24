@@ -98,7 +98,14 @@ ForEach($asset in $assets){
 cd $HOME
 iex (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/chantisnake/vim_config/master/setup.ps1')
 cd .\vimfiles\bundle
-rm -fo vundle.vim
+Remove-Item vundle.vim -Force -Confirm:$false
 git clone https://github.com/VundleVim/Vundle.vim
 cd $HOME
+
+# restart
+Write-Host 'your computer will restart to finish the setups'
+Write-Host 'press Ctrl-c to prevent restarting'
+Write-Host 'Press Enter to restart'
+Read-Host ''
+Restart-Computer
 
