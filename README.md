@@ -5,8 +5,8 @@ this will automatically setup my windows computer with all kinds of great tools 
 
   - [ ] add a one liner
   - [x] automatically restart after this is finished
-  - [ ] add git ssh-key setup
-  - [ ] add vim setup
+  - [x] add git ssh-key setup
+  - [x] add vim setup
   - [ ] add ConEmu setup
-  - [ ] add anaconda 2 and 3 (tricky)
+  - [x] add anaconda 2 and 3 (tricky)
   - [ ] add visual studio and pycharm (this is tricky)
