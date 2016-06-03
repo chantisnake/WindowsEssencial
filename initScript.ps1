@@ -10,6 +10,10 @@ if(-Not(isAdmin)){
     Exit 
 }
 
+# go to a temp dir
+mkdir $HOME/temp
+cd $HOME/temp
+
 # construct the newline character
 $nl = [Environment]::NewLine
 
@@ -130,12 +134,12 @@ foreach ($archieve in $archieves) {
         Write-Host 'downloading the anaconda2 installer' -ForegroundColor Green
         Write-Host 'this could takes a while' -ForegroundColor Green
         $fileUrl = "https://repo.continuum.io/archive/$name"
-        Start-BitsTransfer $fileUrl ./anaconda_installer.exe -DisplayName 'Downloading the Latest Version of Anaconda2...'
+        Start-BitsTransfer $fileUrl ./anaconda2_installer.exe -DisplayName 'Downloading the Latest Version of Anaconda2...'
         
         # check MD5
         Write-Host ' '
         Write-Host 'Checking MD5 value' -ForegroundColor Green
-        $localHash = Get-FileHash ./anaconda_installer.exe -Algorithm MD5 
+        $localHash = Get-FileHash ./anaconda2_installer.exe -Algorithm MD5 
         if($localHash.Hash.ToUpper() = $hash.ToUpper()){
             Write-Host 'MD5 hash is good'
         }
@@ -187,12 +191,12 @@ foreach ($archieve in $archieves) {
         Write-Host 'downloading the anaconda2 installer' -ForegroundColor Green
         Write-Host 'this could takes a while' -ForegroundColor Green
         $fileUrl = "https://repo.continuum.io/archive/$name"
-        Start-BitsTransfer $fileUrl ./anaconda_installer.exe -DisplayName 'Downloading the Latest Version of Anaconda2...'
+        Start-BitsTransfer $fileUrl ./anaconda3_installer.exe -DisplayName 'Downloading the Latest Version of Anaconda2...'
         
         # check MD5
         Write-Host ' '
         Write-Host 'Checking MD5 value' -ForegroundColor Green
-        $localHash = Get-FileHash ./anaconda_installer.exe -Algorithm MD5 
+        $localHash = Get-FileHash ./anaconda3_installer.exe -Algorithm MD5 
         if($localHash.Hash.ToUpper() = $hash.ToUpper()){
             Write-Host 'MD5 hash is good'
         }
@@ -208,17 +212,14 @@ foreach ($archieve in $archieves) {
     }
 }
 
-# downloading vim configuration file
-Write-Host $nl
-Write-Host $nl
-Write-Host 'setting up vim' -ForegroundColor Magenta
+# downloading wechat
+$url = 'http://dlglobal.qq.com/weixin/Windows/WeChat_C1018.exe'
+Start-BitsTransfer $fileUrl ./wechat_installer.exe -DisplayName 'Downloading the Latest Version of wechat...'
+./wechat_installer.exe |Out-Null
+
+# clean up
 cd $HOME
-iex (New-Object Net.WebClient).DownloadString('https://raw.githubusercontent.com/chantisnake/vim_config/master/setup.ps1')
-Write-Host 'redownloading vundle' -ForegroundColor Magenta
-cd .\vimfiles\bundle
-Remove-Item vundle.vim -Force -Confirm:$false
-git clone https://github.com/VundleVim/Vundle.vim
-cd $HOME
+Remove-Item temp/ -Force -Re -Confirm:$false
 
 # restart
 Write-Host 'your computer will restart to finish the setups'
