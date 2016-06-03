@@ -94,6 +94,120 @@ ForEach($asset in $assets){
     }
 }
 
+# installing anaconda2
+Write-Host 'fetching anaconda archieve' -ForegroundColor Green
+$anacondaUrl = 'https://repo.continuum.io/archive/'
+$anacondaWebPage = Invoke-WebRequest $anacondaUrl
+
+Write-Host ' '
+Write-Host 'analysing the HTML' -ForegroundColor Green
+$anacondaHTML = $anacondaWebPage.parsedHTML
+$archieves = $anacondaHTML.body.getElementsByTagName('TR')
+
+foreach ($archieve in $archieves) {
+    
+    # extract information
+    $dataItems = $archieve.children
+    $binItem = $dataItems[0]
+    $SizeItem = $dataItems[1]
+    $timeItem = $dataItems[2]
+    $hashItem = $dataItems[3]
+    
+    if($binItem.innerText -match 'Anaconda2-.*-Windows-x86_64.exe'){  # this is the latest version    
+        # output infomation
+        $name = $binItem.innerText
+        $size = $SizeItem.innerText
+        $time = $timeItem.innerText
+        $hash = $hashItem.innerText
+        Write-Host 'found the latest release of anaconda2'
+        Write-Host "name of the file is: $name"
+        Write-Host "the size of the file is: $size"
+        Write-Host "the last modified time is: $time"
+        Write-Host "the hase(MD5) is: $hash"
+        
+        # download the installer
+        Write-Host ' '
+        Write-Host 'downloading the anaconda2 installer' -ForegroundColor Green
+        Write-Host 'this could takes a while' -ForegroundColor Green
+        $fileUrl = "https://repo.continuum.io/archive/$name"
+        Start-BitsTransfer $fileUrl ./anaconda_installer.exe -DisplayName 'Downloading the Latest Version of Anaconda2...'
+        
+        # check MD5
+        Write-Host ' '
+        Write-Host 'Checking MD5 value' -ForegroundColor Green
+        $localHash = Get-FileHash ./anaconda_installer.exe -Algorithm MD5 
+        if($localHash.Hash.ToUpper() = $hash.ToUpper()){
+            Write-Host 'MD5 hash is good'
+        }
+        else {
+            Write-Host 'The MD5 value is not the same, if you continue you maybe exposed to malware or virus' -ForegroundColor Red
+            Write-Host 'Please check you network setting and try again. There maybe a proxy setted up' -ForegroundColor Red
+            Read-Host 'Press Enter to continue, press Ctrl-C to stop'
+        }
+        
+        # run the installer
+        ./anaconda_installer.exe | Out-Null
+        break
+    }
+}
+
+# installing anaconda3
+Write-Host 'fetching anaconda archieve' -ForegroundColor Green
+$anacondaUrl = 'https://repo.continuum.io/archive/'
+$anacondaWebPage = Invoke-WebRequest $anacondaUrl
+
+Write-Host ' '
+Write-Host 'analysing the HTML' -ForegroundColor Green
+$anacondaHTML = $anacondaWebPage.parsedHTML
+$archieves = $anacondaHTML.body.getElementsByTagName('TR')
+
+foreach ($archieve in $archieves) {
+    
+    # extract information
+    $dataItems = $archieve.children
+    $binItem = $dataItems[0]
+    $SizeItem = $dataItems[1]
+    $timeItem = $dataItems[2]
+    $hashItem = $dataItems[3]
+    
+    if($binItem.innerText -match 'Anaconda3-.*-Windows-x86_64.exe'){  # this is the latest version    
+        # output infomation
+        $name = $binItem.innerText
+        $size = $SizeItem.innerText
+        $time = $timeItem.innerText
+        $hash = $hashItem.innerText
+        Write-Host 'found the latest release of anaconda2'
+        Write-Host "name of the file is: $name"
+        Write-Host "the size of the file is: $size"
+        Write-Host "the last modified time is: $time"
+        Write-Host "the hase(MD5) is: $hash"
+        
+        # download the installer
+        Write-Host ' '
+        Write-Host 'downloading the anaconda2 installer' -ForegroundColor Green
+        Write-Host 'this could takes a while' -ForegroundColor Green
+        $fileUrl = "https://repo.continuum.io/archive/$name"
+        Start-BitsTransfer $fileUrl ./anaconda_installer.exe -DisplayName 'Downloading the Latest Version of Anaconda2...'
+        
+        # check MD5
+        Write-Host ' '
+        Write-Host 'Checking MD5 value' -ForegroundColor Green
+        $localHash = Get-FileHash ./anaconda_installer.exe -Algorithm MD5 
+        if($localHash.Hash.ToUpper() = $hash.ToUpper()){
+            Write-Host 'MD5 hash is good'
+        }
+        else {
+            Write-Host 'The MD5 value is not the same, if you continue you maybe exposed to malware or virus' -ForegroundColor Red
+            Write-Host 'Please check you network setting and try again. There maybe a proxy setted up' -ForegroundColor Red
+            Read-Host 'Press Enter to continue, press Ctrl-C to stop'
+        }
+        
+        # run the installer
+        ./anaconda_installer.exe | Out-Null
+        break
+    }
+}
+
 # downloading vim configuration file
 Write-Host $nl
 Write-Host $nl
