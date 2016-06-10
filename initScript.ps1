@@ -1,4 +1,4 @@
-﻿# check admin
+﻿nst# check admin
 function isAdmin { 
       $identity = [System.Security.Principal.WindowsIdentity]::GetCurrent() 
       $principal = new-object System.Security.Principal.WindowsPrincipal($identity) 
@@ -64,6 +64,12 @@ Write-Host $nl
 Write-Host $nl
 Write-Host 'installing 7z' -ForegroundColor Magenta
 choco install -y 7zip.install
+
+# install aegisub
+Write-Host $nl
+Write-Host $nl
+Write-Host 'installing aegisub' -ForegroundColor Magenta
+choco install -y aegisub
 
 # install python2
 Write-Host $nl
