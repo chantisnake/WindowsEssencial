@@ -21,7 +21,7 @@ $nl = [Environment]::NewLine
 Write-Host $nl
 Write-Host $nl
 Write-Host 'installing choco' -ForegroundColor Magenta
-# iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))
+iex ((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))
 
 # install git
 Write-Host $nl
